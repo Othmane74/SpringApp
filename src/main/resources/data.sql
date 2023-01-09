@@ -6,5 +6,6 @@ INSERT INTO Country(code, name) VALUES
 
 INSERT INTO CITY(name, population, country_id) VALUES
     ('Paris', 12, SELECT id FROM Country WHERE code = 'FR'),
+    ('Toulouse', 22, SELECT id FROM Country WHERE code = 'FR'),
     ('London', 18, SELECT id FROM Country WHERE code = 'UK'),
-    ('New York', 27, SELECT id FROM Country WHERE code = 'US');
+('New York', 27, SELECT id FROM Country WHERE code = 'US');

@@ -7,11 +7,16 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import monprojet.entity.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
+
+
+import monprojet.dto.populationPays;
 
 @Log4j2 // Génère le 'logger' pour afficher les messages de trace
 @DataJpaTest
@@ -41,6 +46,23 @@ public class CountryRepositoryTest {
         int combienDePaysDansLeJeuDeTest = 3 + 1; // 3 dans data.sql, 1 dans test-data.sql
         long nombre = countryDAO.count();
         assertEquals(combienDePaysDansLeJeuDeTest, nombre, "On doit trouver 4 pays" );
+    }
+    @Test
+    void verifierLaPopulationDunPays(){
+        log.info("On compte la population d'un pays");
+        int populationDeFrance= countryDAO.populationPourPays(1);
+        assertEquals(populationDeFrance, 34, "On doit trouver 34");
+    }
+
+    @Test
+    void populationParPays(){
+        log.info("On recupere la liste des pays avec leur population");
+        List<populationPays> resultat= countryDAO.populationParPays();
+        List<Integer> populations = new ArrayList<>(Arrays.asList(34,18,27));
+        assertEquals(resultat.size(),3,"on doit retrouver 3 pays avec chaqun sa population");
+        for (int i=0; i< populations.size();i ++){
+            assertEquals(populations.get(i) , resultat.get(i).getPopulation(), "les populations des pays sont 34, 18, 27");
+        }
     }
 
 }
